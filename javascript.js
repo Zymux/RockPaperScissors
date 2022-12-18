@@ -1,3 +1,7 @@
+let playerScore = 0
+let computerScore = 0
+const buttons = document.querySelectorAll('input')
+
 function getComputerChoice() {
     var choices = [
         "Rock",
@@ -10,40 +14,100 @@ function getComputerChoice() {
     return choice;
 }
 
+function disableButtons () {
+    buttons.forEach(elem => {
+        elem.disabled = true
+    })
+}
+
 // console.log(getComputerChoice());
 
-function playRound(playerSelection, computerSelection) {
+function playRound(playerSelection) {
+    let computerSelection = getComputerChoice()
+    let result = ""
+
         if (computerSelection == playerSelection) {
-            console.log("You Tied.");
+            result = ("Tie. Both players chose " + playerSelection + 
+            "<br>Player Score: " + playerScore + "<br>Computer Score: " + computerScore);
+            if(computerScore == 5) {
+                result += "<br><br> The computer has defeated the weak human brain"
+                disableButtons();
+            }
         }
         else if (computerSelection == "Scissors" && playerSelection == "Paper") {
-            console.log("You Lose! " + computerSelection + " beats " + playerSelection);
+            computerScore += 1;
+            result = ("You Lose! " + computerSelection + " beats " + playerSelection +
+            "<br>Player Score: " + playerScore + "<br>Computer Score: " + computerScore);
+            if(computerScore == 5) {
+                result += "<br><br> The computer has defeated the weak human brain"
+                disableButtons();
+            }
         }
         else if (computerSelection == "Rock" && playerSelection == "Scissors") {
-            console.log("You Lose! " + computerSelection + " beats " + playerSelection);
+            computerScore += 1;
+            result = ("You Lose! " + computerSelection + " beats " + playerSelection +
+            "<br>Player Score: " + playerScore + "<br>Computer Score: " + computerScore);
+            if(computerScore == 5) {
+                result += "<br><br> The computer has defeated the weak human brain"
+                disableButtons();
+            }
         }
         else if (computerSelection == "Paper" && playerSelection == "Rock") {
-            console.log("You Lose! " + computerSelection + " beats " + playerSelection);
+            computerScore += 1;
+            result = ("You Lose! " + computerSelection + " beats " + playerSelection +
+            "<br>Player Score: " + playerScore + "<br>Computer Score: " + computerScore);
+            if(computerScore == 5) {
+                result += "<br><br> The computer has defeated the weak human brain"
+                disableButtons();
+            }
         }
+
         else if (computerSelection == "Scissors" && playerSelection == "Rock") {
-            console.log("You Win! " + playerSelection + " beats " + computerSelection);
+            playerScore += 1
+            result = ("You Win! " + playerSelection + " beats " + computerSelection +
+            "<br>Player Score: " + playerScore + "<br>Computer Score: " + computerScore);
+            if(playerScore == 5) {
+                result += "<br><br> The human brain has defeated the weak computer"
+                disableButtons();
+            }
         }
         else if (computerSelection == "Paper" && playerSelection == "Scissors") {
-            console.log("You Win! " + playerSelection + " beats " + computerSelection);
+            playerScore += 1
+            result = ("You Win! " + playerSelection + " beats " + computerSelection) +
+            "<br>Player Score: " + playerScore + "<br>Computer Score: " + computerScore;
+            if(playerScore == 5) {
+                result += "<br><br> The human brain has defeated the weak computer"
+                disableButtons();
+            }
         }
         else if (computerSelection == "Rock" && playerSelection == "Paper") {
-            console.log("You Win! " + playerSelection + " beats " + computerSelection);
+            playerScore += 1
+            result = ("You Win! " + playerSelection + " beats " + computerSelection +
+            "<br>Player Score: " + playerScore + "<br>Computer Score: " + computerScore);
+            if(playerScore == 5) {
+                result += "<br><br> The human brain has defeated the weak computer"
+                disableButtons();
+            }
         }
+        
+        document.getElementById('result').innerHTML = result
+        return;
 }
 
-for (let i = 1; i < 6; i++) {
-    const playerSelection = String(window.prompt("Rock, Paper, or Scissors?", ""));
-    const computerSelection = getComputerChoice();
-    console.log("Game: " + i);
-    console.log(playRound(playerSelection, computerSelection));
-    console.log("Player: " + playerSelection);
-    console.log("Computer: " + computerSelection);
-}
+buttons.forEach(button =>{
+    button.addEventListener('click', function(){
+        playRound(button.value);
+    })
+})
+
+// for (let i = 1; i < 6; i++) {
+//     const playerSelection = String(window.prompt("Rock, Paper, or Scissors?", ""));
+//     const computerSelection = getComputerChoice();
+//     console.log("Game: " + i);
+//     console.log(playRound(playerSelection, computerSelection));
+//     console.log("Player: " + playerSelection);
+//     console.log("Computer: " + computerSelection);
+// }
 
 //Can also create function game() and then add the for loop to it, but only make it run
 //the function playRound 5x. Then outside of the function do console.log(game)
